@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "streamupdatemonitor"
+version = "0.1.0"
+description = ""
+authors = ["AdiEcho <648299819@qq.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+apprise = "^1.8.1"
+apscheduler = "^3.10.4"
+requests = "^2.32.3"
+pyyaml = "^6.0.1"
+loguru = "^0.7.2"
+sqlalchemy = "^2.0.31"
+pydantic = "^2.8.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

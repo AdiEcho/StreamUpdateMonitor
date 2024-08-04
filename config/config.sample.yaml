@@ -1,0 +1,62 @@
+log:
+  enable: true
+  std_level: DEBUG
+  log_level: DEBUG
+  # you can rotate log file by size or time, e.g. 1MB or 1D. URL: https://loguru.readthedocs.io/en/stable/api/logger.html#loguru._logger.Logger.add
+  rotation: 10 MB
+  retention: 15 days
+
+headers:
+  User-Agent: >-
+    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like
+    Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/127.0.0.0
+
+services:
+  netflix:
+    enable: true
+    interval: 1440  # interval in minutes when to check for new content
+    immediate_send: true  # send notification immediately when new content is found
+
+db:
+  - enable: false
+    type: sqlite
+    config:
+      # default in config/sum.db, use absolute path if you want to change it
+      db_path: ""
+  # enable mysql database
+  - enable: false
+    type: mysql
+    config:
+      host: localhost
+      port: 3306
+      db: test
+      user: root
+      password: root
+
+notifications:
+  # enable apprise notification
+  - enable: false
+    type: apprise
+    config:
+      msg_format: markdown
+      services:  # add your apprise services here, details: https://github.com/caronc/apprise?tab=readme-ov-file#productivity-based-notifications
+        - 'mailto://myuserid:mypass@gmail.com'
+        - 'discord:///4174216298/JHMHI8qBe7bk2ZwO5U711o3dV_js'
+        - 'tgram://temp:temp/your_id/?format=markdown&mdv=1'  # if you use markdown, format=markdown&mdv=1 is required
+  # enable webhook notification  TODO Unsupported
+  - enable: false
+    type: webhook
+    config:
+      request_method: POST
+      custom_headers:
+      webhook_url: http://your-webhook-url/
+      webhook_payload:
+
+scheduler:
+  enable: true
+  store:
+    - store_enable: true
+      store_backend: sqlite  # only support sqlite right now
+      config:
+        # default in config/sum.db, use absolute path if you want to change it
+        db_path: ""
