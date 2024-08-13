@@ -15,7 +15,6 @@ services:
   netflix:
     enable: true
     interval: 1440  # interval in minutes when to check for new content
-    immediate_send: true  # send notification immediately when new content is found
 
 db:
   - enable: false
@@ -34,15 +33,22 @@ db:
       password: root
 
 notifications:
+  - enable: true
+    type: stdout
+    config:
+      msg_format: text
+      immediate_send: true  # send notification immediately when new content is found
   # enable apprise notification
   - enable: false
     type: apprise
     config:
-      msg_format: markdown
       services:  # add your apprise services here, details: https://github.com/caronc/apprise?tab=readme-ov-file#productivity-based-notifications
         - 'mailto://myuserid:mypass@gmail.com'
         - 'discord:///4174216298/JHMHI8qBe7bk2ZwO5U711o3dV_js'
         - 'tgram://temp:temp/your_id/?format=markdown&mdv=1'  # if you use markdown, format=markdown&mdv=1 is required
+      msg_format: markdown
+      immediate_send: false  # Send notification immediately when new content is found
+      update_send_time: true  # Whether to update the message send time to 00:00 of the current day. Defaults to False.
   # enable webhook notification  TODO Unsupported
   - enable: false
     type: webhook

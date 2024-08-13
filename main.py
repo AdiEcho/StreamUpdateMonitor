@@ -2,6 +2,7 @@ import sys
 import time
 from utils import sql
 from loguru import logger
+from datetime import datetime
 from utils.config import config
 from services import Service_T, ServiceMap
 from utils.scheduler import scheduler, add_job
@@ -77,14 +78,20 @@ def monitor_service(_service: Service_T):
     if len(__notifications) > 0:
         for n in __notifications:
             for msg in _service.get_notification_msgs(msg_format=n.config.get("msg_format", "text"), notification_obj=n):
-                if _service.config.immediate_send:
+                if n.config.get("immediate_send"):
                     if n.send_msg(msg):
                         logger.info(f"Send notification success")
                     else:
                         logger.error(f"Send notification failed")
                 else:
-                    _trigger = DateTrigger(run_date=msg.send_time.replace(hour=0, minute=0, second=0, microsecond=0))
-                    add_job(n.send_msg, _trigger, kwargs={"msg": msg})
+                    if msg.send_time < datetime.now():
+                        logger.error("Send time is earlier than now, will not send")
+                        continue
+                    if n.config.get("update_send_time"):
+                        _trigger = DateTrigger(run_date=msg.send_time.replace(hour=0, minute=0, second=0, microsecond=0))
+                    else:
+                        _trigger = DateTrigger(run_date=msg.send_time)
+                    add_job(n.send_msg, _trigger, kwargs={"msg": msg}, name=msg.name)
     if len(__dbs) > 0:
         for session_maker in __dbs:
             session = session_maker()

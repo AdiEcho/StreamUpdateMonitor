@@ -1,4 +1,8 @@
 # StreamUpdateMonitor
+English | [简体中文](README.zh-CN.md)
+
+![License](https://img.shields.io/github/license/adiecho/StreamUpdateMonitor)
+
 StreamUpdateMonitor is a versatile tool designed to keep users informed about updates on various streaming platforms. 
 
 ## Configuration
@@ -8,7 +12,6 @@ Please set up the configuration by copying the file to `config/config.yaml` and 
 
 ## Features
 - [x] **Custom Monitoring Frequency**: Users can set custom monitoring frequencies for each platform to receive notifications either on the same day of updates or immediately upon detection of new content.
-
 - [x] **Custom Notifications**: Users can set custom notification settings to receive notifications via email, SMS, or other messaging services (Base on Apprise).
 
 

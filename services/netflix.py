@@ -86,7 +86,8 @@ class Netflix(Service):
                             f"*image:* [Image]({image})\n"
                             f"*collection_id:* {collection_id}\n"
                             f"*genre_id:* {genre_id}\n"
-                            f"*country:* {country}")
+                            f"*country:* {country}\n"
+                            f"*url:* https://www.netflix.com/watch/{video_id}")
             elif msg_format == "html":
                 msg_body = (f"<b>Release Name:</b> {title_name}<br>"
                             f"<b>video_id:</b> {video_id}<br>"
@@ -94,7 +95,8 @@ class Netflix(Service):
                             f"<b>image:</b> <a href='{image}'>Image</a><br>"
                             f"<b>collection_id:</b> {collection_id}<br>"
                             f"<b>genre_id:</b> {genre_id}<br>"
-                            f"<b>country:</b> {country}")
+                            f"<b>country:</b> {country}<br>"
+                            f"<b>url:</b> https://www.netflix.com/watch/{video_id}")
             else:
                 msg_body = (f"Release Name: {title_name}\n"
                             f"video_id: {video_id}\n"
@@ -102,8 +104,10 @@ class Netflix(Service):
                             f"image: {image}\n"
                             f"collection_id: {collection_id}\n"
                             f"genre_id: {genre_id}\n"
-                            f"country: {country}")
-            msgs.append(NotificationMSG(title=msg_title, body=msg_body, msg_format=msg_format, name=title_name))
+                            f"country: {country}\n"
+                            f"url: https://www.netflix.com/watch/{video_id}")
+            msgs.append(NotificationMSG(title=msg_title, body=msg_body, msg_format=msg_format, name=title_name,
+                                        send_time=start_time_datetime))
         return msgs
 
     def get_sql_query(self, session: Session, /, *args, **kwargs) -> list[NetflixSQL]:

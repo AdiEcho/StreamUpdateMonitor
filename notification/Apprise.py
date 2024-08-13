@@ -13,7 +13,7 @@ class AppriseN(Notification):
         for service in services:
             self.apo.add(service)
 
-    def send_msg(self, msg: NotificationMSG, /, *args, **kwargs):
+    def send_msg(self, msg: NotificationMSG, *args, **kwargs):
         return self.apo.notify(
             title=msg.title,
             body=msg.body,
